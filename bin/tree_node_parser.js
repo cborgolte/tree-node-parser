@@ -61,14 +61,7 @@ function callback(nodes, edges, adjacencyList) {
   }
 
   // calculate path to the given node
-  let runner = nodename;
-  let pathSegments = [];
-  while (runner !== 'root') {
-    pathSegments.unshift(runner);
-    runner = edges[runner];
-  }
-  pathSegments.unshift('');
-  let path = pathSegments.join('/');
+  let path = parser.getPathToNode(nodename, edges);
   console.log('Path to node "' + nodename + '": ' + path);
 
   // find nodes w/ exactly two children

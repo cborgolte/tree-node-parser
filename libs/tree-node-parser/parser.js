@@ -45,3 +45,17 @@ function leafCollector(parentNode, collection, adjacencyList) {
   return collection;
 }
 module.exports.leafCollector = leafCollector;
+
+// calculate the path to a given 'nodename' through a graph given by 'edges'
+function getPathToNode(nodename, edges) {
+  // calculate path to the given node
+  let runner = nodename;
+  let pathSegments = [];
+  while (runner !== 'root') {
+    pathSegments.unshift(runner);
+    runner = edges[runner];
+  }
+  pathSegments.unshift('');
+  return pathSegments.join('/');
+}
+module.exports.getPathToNode = getPathToNode;
