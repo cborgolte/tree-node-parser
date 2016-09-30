@@ -54,7 +54,7 @@ if (![filename, nodename, startNode, amountOfChildren].every(v=> v !== undefined
   process.exit(9);
 }
 
-function callback(nodes, edges, adjacencyList) {
+function handleResults(nodes, edges, adjacencyList) {
   // guard: make sure, given nodename exists
   if (!nodes.has(nodename)) {
     error('Given node "' + nodename + '" does not exist.')
@@ -76,5 +76,5 @@ function callback(nodes, edges, adjacencyList) {
   console.log('All leaf nodes starting from node "' + startNode + '": ' + fruits.join(', '));
 }
 
-let parserResults = parser.parse(filename, callback);
+let parserResults = parser.parse(filename, handleResults);
 
