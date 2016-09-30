@@ -1,4 +1,9 @@
 {
+  "name": "tree-node-parser",
+  "version": "1.0.0",
+  "description": "Excercise task #3",
+  "main": "libs/tree-node-parser/parser.js",
+  "author": "cborgolte",
   "dependencies": {
     "csv-parse": "^1.1.7"
   }
