@@ -17,31 +17,33 @@ if (process.argv.length != 4) {
 let filename = process.argv[2]
 let nodename = process.argv[3]
 
-
 function callback(nodes, edges, adjacencyList) {
-    // guard: make sure, given nodename exists
-    if (!nodes.has(nodename)) {
-      error('Given node "' + nodename + '" does not exist.')
-    }
+  // guard: make sure, given nodename exists
+  if (!nodes.has(nodename)) {
+    error('Given node "' + nodename + '" does not exist.')
+  }
 
-    // calculate path to the given node
-    let runner = nodename;
-    let pathSegments = [];
-    while (runner !== 'root') {
-      pathSegments.unshift(runner);
-      runner = edges[runner];
-    }
-    pathSegments.unshift('');
-    let path = pathSegments.join('/');
+  // calculate path to the given node
+  let runner = nodename;
+  let pathSegments = [];
+  while (runner !== 'root') {
+    pathSegments.unshift(runner);
+    runner = edges[runner];
+  }
+  pathSegments.unshift('');
+  let path = pathSegments.join('/');
+  console.log('Path to node "' + nodename + '": ' + path);
 
-    // find nodes w/ exactly two children
-    let nodesWithTwoChildren = Object.keys(adjacencyList)
-      .filter(key => adjacencyList[key].length === 2);
-    console.log(nodesWithTwoChildren);
+  // find nodes w/ exactly two children
+  let amountOfChildren = 2;
+  let nodesWithTwoChildren = Object.keys(adjacencyList)
+    .filter(key => adjacencyList[key].length === amountOfChildren);
+  console.log('All nodes with ' + amountOfChildren + ' children: ' + nodesWithTwoChildren.join(', '));
 
-    // find leaf odes for fruits
-    let fruits = parser.leafCollector('sour', [], adjacencyList);
-    console.log(fruits);
+  // find leaf nodes for fruits starting at 'fruit' node
+  let startNode = 'fruit';
+  let fruits = parser.leafCollector(startNode, [], adjacencyList);
+  console.log('All leaf nodes starting from node "' + startNode + '": ' + fruits.join(', '));
 }
 
 let parserResults = parser.parse(filename, callback);
