@@ -24,8 +24,18 @@ module.exports.parse = (filename, callback) => {
     });
   });
 
-  fs.createReadStream(filename).pipe(csvParser);
+  let readStream = fs.createReadStream(filename);
+  readStream.on('error', function(err) {
+    if (err.code === "ENOENT") {
+      console.error('File "' + filename + '" does not exist.');
+      process.exit(1);
+    }
+    else {
+      throw err;
+    }
+  });
 
+  readStream.on('open', () => readStream.pipe(csvParser));
   csvParser.on('end', () => {
     callback(nodes, edges, adjacencyList);
   });
