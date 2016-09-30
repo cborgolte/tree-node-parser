@@ -44,11 +44,6 @@ let nodename = options['find-path-to'];
 let startNode = options['start-node'];
 let amountOfChildren = options['nodes-with-n-children'];
 
-function error(msg) {
-  console.error(msg)
-  process.exit(1)
-}
-
 if (![filename, nodename, startNode, amountOfChildren].every(v=> v !== undefined)) {
   argv.help();
   process.exit(9);
@@ -57,7 +52,8 @@ if (![filename, nodename, startNode, amountOfChildren].every(v=> v !== undefined
 function handleResults(nodes, edges, adjacencyList) {
   // guard: make sure, given nodename exists
   if (!nodes.has(nodename)) {
-    error('Given node "' + nodename + '" does not exist.')
+    console.error('Given node "' + nodename + '" does not exist.')
+    process.exit(1)
   }
 
   // calculate path to the given node
@@ -77,4 +73,3 @@ function handleResults(nodes, edges, adjacencyList) {
 }
 
 let parserResults = parser.parse(filename, handleResults);
-
